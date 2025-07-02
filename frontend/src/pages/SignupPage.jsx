@@ -13,40 +13,42 @@ import {
 } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
 import pict3 from '../assets/pict3.jpg'
-import { path } from '../routes/routes.js'
-import * as Yup from 'yup'
-import { useDispatch } from 'react-redux'
-import { setAuth } from '../slices/authSlice.js'
+import path from '../routes/routes.js'
+import * as yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAuth, removeAuth } from '../slices/authSlice.js'
 import { useSignupMutation } from '../services/authApi.js'
+import { useTranslation } from 'react-i18next'
 
 const SignupPage = () => {
   const usernameRef = useRef()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [signup, { isLoading }] = useSignupMutation()
+  const { t } = useTranslation()
+  const auth = useSelector(state => state.auth)
 
-  const validationSchema = Yup.object({
-    username: Yup.string()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле'),
-    password: Yup.string()
-      .min(6, 'Не менее 6 символов')
-      .required('Обязательное поле'),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
-      .required('Обязательное поле'),
-  });
+  const validationSchema = yup.object({
+    username: yup.string()
+      .min(3, t('validate.min3'))
+      .max(20, t('validate.max20'))
+      .required(t('validate.required')),
+    password: yup.string()
+      .min(6, t('validate.min6'))
+      .required(t('validate.required')),
+    confirmPassword: yup.string()
+      .oneOf([yup.ref('password'), null], t('validate.mustMatch'))
+      .required(t('validate.required')),
+  })
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      navigate(path.chat, { replace: true })
+    if (auth.isAuthenticated) {
+      navigate(path.chat)
     }
-  }, [navigate])
+  }, [auth.isAuthenticated, navigate])
 
   useEffect(() => {
-    usernameRef.current.focus();
+    usernameRef.current.focus()
   }, [])
 
   const formik = useFormik({
@@ -58,24 +60,30 @@ const SignupPage = () => {
     validationSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       setSubmitting(true)
-
       try {
+        dispatch(removeAuth())
+
         const res = await signup(values).unwrap()
-        console.log('Полный ответ сервера:', res)
-        
+
         if (!res.token) throw new Error('Токен не получен')
-        
+
         dispatch(setAuth({
-          username: values.username,
+          username: res.username,
           token: res.token,
         }))
-        
+
         navigate(path.chat, { replace: true })
-      } catch (error) {
-        console.error('Ошибка регистрации:', error)
-        const message = error.data?.message || 'Ошибка регистрации'
-        setErrors({ username: message })
-      } finally {
+      }
+      catch (error) {
+        dispatch(removeAuth())
+        if (error.status === 409) {
+          setErrors({ username: t('errors.mustUnique') })
+        }
+        else {
+          setErrors({ username: t('errors.registrationError') })
+        }
+      }
+      finally {
         setSubmitting(false)
       }
     },
@@ -88,18 +96,18 @@ const SignupPage = () => {
           <Card className="shadow-sm">
             <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
               <div>
-                <img 
-                  src={pict3} 
-                  className="rounded-circle" 
-                  alt="Регистрация" 
+                <img
+                  src={pict3}
+                  className="rounded-circle"
+                  alt="Регистрация"
                 />
               </div>
               <Form onSubmit={formik.handleSubmit} className="w-50">
-                <h1 className="text-center mb-4">Регистрация</h1>
-                
+                <h1 className="text-center mb-4">{t('signup.title')}</h1>
+
                 <FloatingLabel
                   controlId="username"
-                  label="Имя пользователя"
+                  label={t('signup.username')}
                   className="mb-3"
                 >
                   <FormControl
@@ -117,7 +125,7 @@ const SignupPage = () => {
                     {formik.errors.username}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                
+
                 <FloatingLabel
                   controlId="password"
                   label="Пароль"
@@ -139,7 +147,7 @@ const SignupPage = () => {
                     {formik.errors.password}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                
+
                 <FloatingLabel
                   controlId="confirmPassword"
                   label="Подтвердите пароль"
@@ -157,16 +165,17 @@ const SignupPage = () => {
                     isInvalid={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
                   />
                   <Form.Control.Feedback placement="right" className="invalid-tooltip">
+                    {formik.errors.confirmPassword}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                
-                <Button 
-                  variant="outline-primary" 
-                  type="submit" 
+
+                <Button
+                  variant="outline-primary"
+                  type="submit"
                   className="w-100"
                   disabled={formik.isSubmitting || isLoading}
                 >
-                  {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+                  {t('signup.send')}
                 </Button>
               </Form>
             </Card.Body>

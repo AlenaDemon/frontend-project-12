@@ -1,33 +1,42 @@
 import js from '@eslint/js'
 import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import pluginJs from '@eslint/js'
+import stylistic from '@stylistic/eslint-plugin'
+import react from 'eslint-plugin-react'
 
 export default [
-  { ignores: ['dist'] },
+  stylistic.configs.recommended,
+  pluginJs.configs.recommended,
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{js,mjs,cjs,jsx}'],
+    plugins: { js, react },
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: globals.browser,
       parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
     },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+  },
+  { files: ['**/*.{js,mjs,cjs,jsx}'], languageOptions: { globals: globals.node } },
+  {
+    ignores: ['dist/', 'node_modules/'],
+  },
+  {
+    languageOptions: {
+      globals: {
+        document: 'readonly',
+        window: 'readonly',
+      },
     },
     rules: {
-      ...js.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'no-undef': 'error',
+      'react/jsx-uses-react': 'off',
+      'react/jsx-uses-vars': 'error',
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
     },
   },
 ]

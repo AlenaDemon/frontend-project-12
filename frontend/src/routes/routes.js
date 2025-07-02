@@ -1,12 +1,12 @@
-export const path = {
-    chat: '/',
-    login: '/login',
-    notFound: '*',
-    signup: '/signup'
+const path = {
+  chat: '/chat',
+  login: '/login',
+  notFound: '*',
+  signup: '/signup',
+  api: '/api/v1',
+  channels: '/channels',
+  messages: '/messages',
+  channelId: id => ['/channels', id].join('/'),
 }
 
-const apiPath = '/api/v1'
-
-export default {
-  loginPath: () => [apiPath, 'login'].join('/'),
-}
+export default path

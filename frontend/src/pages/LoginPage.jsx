@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect, useRef} from 'react'
+import { useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import {
   Container,
@@ -11,37 +11,36 @@ import {
   FloatingLabel,
   FormControl,
 } from 'react-bootstrap'
-import { useLocation, useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import pict2 from '../assets/pict2.jpg'
-{/*import useAuth from '../hooks/index.jsx';*/}
-import { path } from '../routes/routes.js'
+import path from '../routes/routes.js'
 import { useLoginMutation } from '../services/authApi.js'
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux'
-import { setAuth } from '../slices/authSlice.js'
+import * as yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAuth, removeAuth } from '../slices/authSlice.js'
+import { useTranslation } from 'react-i18next'
 
 const LoginPage = () => {
- {/* const auth = useAuth()*/}
-  const inputRef = useRef()
-  const location = useLocation()
+  const usernameRef = useRef()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [login, { isLoading }] = useLoginMutation()
+  const { t } = useTranslation()
+  const auth = useSelector(state => state.auth)
 
-  const validationSchema = Yup.object({
-    username: Yup.string().required('Обязательное поле'),
-    password: Yup.string().required('Обязательное поле'),
+  const validationSchema = yup.object({
+    username: yup.string().required(t('validate.required')),
+    password: yup.string().required(t('validate.required')),
   })
 
   useEffect(() => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    navigate(path.chat, { replace: true });
-  }
-}, [navigate])
+    if (auth.isAuthenticated) {
+      navigate(path.chat)
+    }
+  }, [auth.isAuthenticated, navigate])
 
   useEffect(() => {
-    inputRef.current.focus()
+    usernameRef.current.focus()
   }, [])
 
   const formik = useFormik({
@@ -54,23 +53,21 @@ const LoginPage = () => {
       setSubmitting(true)
 
       try {
-        console.log(values)
         const res = await login(values).unwrap()
-        console.log('Полный ответ сервера:', res); 
-        if (!res.token) throw new Error('Токен не получен');
-        dispatch(setAuth({ 
-        username: values.username, 
-        token: res.token 
+        if (!res.token) throw new Error('Токен не получен')
+        dispatch(setAuth({
+          username: values.username,
+          token: res.token,
         }))
-       {/* auth.logIn()*/}
         navigate(path.chat, { replace: true })
       }
       catch (error) {
-        console.log('res', error)
-        const message = error.data?.message || 'Неверные имя пользователя или пароль'
+        dispatch(removeAuth())
+        const message = error.data?.message || t('login.feedback')
         setErrors({ password: message })
-        inputRef.current.focus()
-      } finally {
+        usernameRef.current.focus()
+      }
+      finally {
         setSubmitting(false)
       }
     },
@@ -82,19 +79,19 @@ const LoginPage = () => {
           <Card className="shadow-sm">
             <Card.Body className="row p-5">
               <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
-                <img 
-                  src={pict2} 
-                  className="rounded-circle" 
-                  alt="Войти" 
+                <img
+                  src={pict2}
+                  className="rounded-circle"
+                  alt="Войти"
                 />
               </Col>
               <Col xs={12} md={6} className="mt-3 mt-md-0">
                 <Form onSubmit={formik.handleSubmit}>
                   <fieldset>
-                    <h1 className="text-center mb-4">Войти</h1>
+                    <h1 className="text-center mb-4">{t('login.entry')}</h1>
                     <FloatingLabel
                       controlId="username"
-                      label="Ваш ник"
+                      label={t('login.username')}
                       className="mb-3"
                     >
                       <FormControl
@@ -106,12 +103,12 @@ const LoginPage = () => {
                         onBlur={formik.handleBlur}
                         isInvalid={formik.touched.username && !!formik.errors.username}
                         required
-                        ref={inputRef}
+                        ref={usernameRef}
                       />
                     </FloatingLabel>
                     <FloatingLabel
                       controlId="password"
-                      label="Пароль"
+                      label={t('login.password')}
                       className="mb-4"
                     >
                       <FormControl
@@ -125,16 +122,17 @@ const LoginPage = () => {
                         isInvalid={formik.touched.password && !!formik.errors.password}
                         required
                       />
-                      <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль
+                      <Form.Control.Feedback type="invalid">
+                        {t('login.feedback')}
                       </Form.Control.Feedback>
                     </FloatingLabel>
-                    <Button 
-                      variant="outline-primary" 
-                      type="submit" 
+                    <Button
+                      variant="outline-primary"
+                      type="submit"
                       className="w-100 mb-3"
                       disabled={formik.isSubmitting || isLoading}
                     >
-                      Войти
+                      {t('login.entry')}
                     </Button>
                   </fieldset>
                 </Form>
@@ -142,9 +140,9 @@ const LoginPage = () => {
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>Нет аккаунта?</span>{' '}
+                <span>{t('login.noAccount')}</span>
                 <Link to={path.signup}>
-                  Регистрация
+                  {t('login.registration')}
                 </Link>
               </div>
             </Card.Footer>
@@ -152,7 +150,7 @@ const LoginPage = () => {
         </Col>
       </Row>
     </Container>
-    
+
   )
 }
 
