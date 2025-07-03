@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { hideModal, selectChannel } from '../slices/uiSlice.js' // uiSlice, не modalSlice
+import { hideModal, selectChannel } from '../slices/uiSlice.js'
 import { useRemoveChannelMutation } from '../services/channelsApi.js'
 
 const Remove = () => {
