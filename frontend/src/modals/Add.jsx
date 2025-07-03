@@ -70,7 +70,7 @@ const Add = () => {
               ref={inputRef}
               name="name"
               id="name"
-              aria-label="Имя канала"
+              aria-label={t('add.name')}
               disabled={isLoading}
               value={formik.values.name}
               onChange={formik.handleChange}
