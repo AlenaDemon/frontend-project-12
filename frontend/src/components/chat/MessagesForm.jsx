@@ -46,6 +46,7 @@ const MessagesForm = () => {
             name="body"
             value={formik.values.body}
             onChange={formik.handleChange}
+            aria-label="Новое сообщение"
             placeholder={t('chat.input')}
             className="border-0 p-0 ps-2"
             ref={inputRef}
