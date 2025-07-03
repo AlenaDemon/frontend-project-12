@@ -13,8 +13,8 @@ import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice
 const init = async () => {
   filter.loadDictionary('en')
   const rollbarConfig = {
-    accessToken: 'undefined',
-    environment: 'testenv',
+    accessToken: '7d0b140023c648b8a0b0066938ab40ee',
+    environment: 'production',
   }
 
   const socket = io()
