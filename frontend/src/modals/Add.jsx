@@ -60,23 +60,22 @@ const Add = () => {
       aria-labelledby="add-channel-modal"
     >
       <Modal.Header closeButton>
-        <Modal.Title id="add-channel-modal">{t('add.add')}</Modal.Title>
+        <Modal.Title>{t('add.add')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form noValidate onSubmit={formik.handleSubmit}>
-          <Form.Group controlId="channel-name-input" className="mb-3">
+          <Form.Group controlId="name">
             <Form.Control
               ref={inputRef}
               name="name"
-              id="name"
-              aria-label={t('add.name')}
               disabled={isLoading}
               value={formik.values.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               isInvalid={(formik.touched.name && !!formik.errors.name)}
             />
+            <Form.Label visuallyHidden>{t('add.name')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>
