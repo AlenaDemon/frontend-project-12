@@ -35,7 +35,7 @@ export default {
     errors: {
       errorLoadingChannels: 'Ошибка загрузки каналов',
       networkError: 'Ошибка соединения',
-      mustUnique: 'Пользователь уже существует',
+      mustUnique: 'Такой пользователь уже существует',
       registrationError: 'Ошибка регистрации',
     },
     messages: {
