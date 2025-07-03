@@ -16,7 +16,7 @@
   "main": "frontend/src/init.jsx",
   "scripts": {
     "build": "npm run build --prefix frontend",
-    "start": "serve -s ./frontend/dist -l $PORT",
+    "start": "start-server -s ./frontend/dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd frontend && npm ci"
   },

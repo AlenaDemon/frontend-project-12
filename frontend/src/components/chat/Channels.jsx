@@ -3,7 +3,6 @@ import { Col, Button, Nav } from 'react-bootstrap'
 import { PlusSquare } from 'react-bootstrap-icons'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectChannel, showModal } from '../../slices/uiSlice.js'
-import { useGetChannelsQuery } from '../../services/channelsApi'
 import ChannelItem from './ChannelsItem.jsx'
 import { useTranslation } from 'react-i18next'
 
@@ -11,11 +10,7 @@ const Channels = () => {
   const dispatch = useDispatch()
   const channelsState = useSelector(state => state.channels)
   const currentChannelId = useSelector(state => state.ui.selectedChannelId)
-  const { isLoading, isError } = useGetChannelsQuery()
   const { t } = useTranslation()
-
-  if (isLoading) return <div>{t('errors.loadingChannels')}</div>
-  if (isError) return <div>{t('errors.errorLoadingChannels')}</div>
 
   return (
     <Col xs={4} md={2} className="border-end px-0 bg-light flex-column h-100 d-flex">

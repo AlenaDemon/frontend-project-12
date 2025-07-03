@@ -33,7 +33,6 @@ export default {
       message_many: 'сообщений',
     },
     errors: {
-      loadingChannels: 'Загрузка каналов...',
       errorLoadingChannels: 'Ошибка загрузки каналов',
       networkError: 'Ошибка соединения',
       mustUnique: 'Пользователь уже существует',
