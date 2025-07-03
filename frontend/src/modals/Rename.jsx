@@ -61,13 +61,14 @@ const Rename = () => {
       aria-labelledby="rename-channel-modal"
     >
       <Modal.Header closeButton>
-        <Modal.Title id="rename-channel-modal">{t('rename.title')}</Modal.Title>
+        <Modal.Title>{t('rename.title')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form noValidate onSubmit={formik.handleSubmit}>
-          <Form.Group controlId="channel-new-name" className="mb-3">
+          <Form.Group controlId="name">
             <Form.Control
+              className="mb-2"
               ref={inputRef}
               name="name"
               value={formik.values.name}
@@ -78,6 +79,7 @@ const Rename = () => {
               }
               disabled={isLoading}
             />
+            <Form.Label visuallyHidden>{t('add.name')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name || formik.status}
             </Form.Control.Feedback>
