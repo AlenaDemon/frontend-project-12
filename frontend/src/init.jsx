@@ -35,8 +35,6 @@ const init = async () => {
         escapeValue: false,
       },
     })
-  const rollbar = new Rollbar(rollbarConfig)
-  rollbar.error('Test error from frontend to verify Rollbar integration')
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
