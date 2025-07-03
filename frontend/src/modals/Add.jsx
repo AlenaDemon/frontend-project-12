@@ -29,7 +29,6 @@ const Add = () => {
       .trim()
       .min(3, t('validate.min3'))
       .max(20, t('validate.max20'))
-      .required(t('validate.required'))
       .notOneOf(channelNames, t('validate.mustUnique')),
   })
 
@@ -70,7 +69,8 @@ const Add = () => {
             <Form.Control
               ref={inputRef}
               name="name"
-              placeholder={t('add.name')}
+              id="name"
+              aria-label="Имя канала"
               disabled={isLoading}
               value={formik.values.name}
               onChange={formik.handleChange}
