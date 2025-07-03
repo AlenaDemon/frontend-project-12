@@ -18,7 +18,6 @@ export const channelsApi = createApi({
     getChannels: builder.query({
       query: username => ({
         url: path.channels,
-        // например, можно передавать ?user=<username>
         params: { user: username },
       }),
       providesTags: ['Channel'],

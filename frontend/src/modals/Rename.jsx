@@ -38,14 +38,15 @@ const Rename = () => {
   const formik = useFormik({
     initialValues: { name: channelName || '' },
     validationSchema: schema,
-    onSubmit: async ({ name }, { setStatus }) => {
+    onSubmit: async ({ name }, { resetForm }) => {
       try {
         await renameChannel({ id: channelId, name: filter.clean(name) }).unwrap()
         toast.success(t('rename.rename'))
         dispatch(hideModal())
+        resetForm()
       }
       catch {
-        setStatus(t('errors.networkError'))
+        toast.error(t('errors.networkError'))
       }
     },
   })

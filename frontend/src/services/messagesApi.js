@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import path from '../routes/routes.js'
 
 export const messagesApi = createApi({
-  reducerPath: 'messageApi',
+  reducerPath: 'messagesApi',
   tagTypes: ['Message'],
   baseQuery: fetchBaseQuery({
     baseUrl: path.api,
@@ -16,7 +16,7 @@ export const messagesApi = createApi({
   }),
   endpoints: builder => ({
     getMessages: builder.query({
-      query: channelId => `${path.channels}/${channelId}${path.messages}`,
+      query: () => path.messages,
       providesTags: ['Message'],
     }),
     addMessage: builder.mutation({
