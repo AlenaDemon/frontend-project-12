@@ -4,7 +4,6 @@ import Messages from '../components/chat/Messages.jsx'
 import RenderModal from '../modals/RenderModal.jsx'
 import { useGetChannelsQuery } from '../services/channelsApi.js'
 import { useGetMessagesQuery } from '../services/messagesApi.js'
-import Loader from '../components/Loader.jsx'
 
 const ChatPage = () => {
   const { isLoading: isLoadingChannels } = useGetChannelsQuery()
