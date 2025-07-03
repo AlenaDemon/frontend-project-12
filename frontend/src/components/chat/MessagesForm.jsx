@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useAddMessageMutation } from '../../services/messagesApi.js'
-import { Form, InputGroup, Button, Col } from 'react-bootstrap'
+import { Form, InputGroup, Button } from 'react-bootstrap'
 import { ArrowRightSquare } from 'react-bootstrap-icons'
 import { useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

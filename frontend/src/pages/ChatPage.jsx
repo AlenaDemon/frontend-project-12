@@ -1,4 +1,3 @@
-import React from 'react'
 import { Container, Row } from 'react-bootstrap'
 import Channels from '../components/chat/Channels.jsx'
 import Messages from '../components/chat/Messages.jsx'

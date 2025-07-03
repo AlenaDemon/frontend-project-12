@@ -1,4 +1,3 @@
-import React from 'react'
 import { Image } from 'react-bootstrap'
 import pict1 from '../assets/pict1.svg'
 import path from '../routes/routes.js'

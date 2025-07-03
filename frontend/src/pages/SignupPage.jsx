@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import {
@@ -11,7 +10,7 @@ import {
   FloatingLabel,
   FormControl,
 } from 'react-bootstrap'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import pict3 from '../assets/pict3.jpg'
 import path from '../routes/routes.js'
 import * as yup from 'yup'

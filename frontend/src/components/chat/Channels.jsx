@@ -1,4 +1,3 @@
-import React from 'react'
 import { Col, Button, Nav } from 'react-bootstrap'
 import { PlusSquare } from 'react-bootstrap-icons'
 import { useSelector, useDispatch } from 'react-redux'
