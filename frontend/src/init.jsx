@@ -13,8 +13,8 @@ import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice
 const init = async () => {
   filter.loadDictionary('en')
   const rollbarConfig = {
-    accessToken: import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN,
-    environment: 'production',
+    accessToken: 'undefined',
+    environment: 'testenv',
   }
 
   const socket = io()
