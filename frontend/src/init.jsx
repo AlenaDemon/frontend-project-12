@@ -1,3 +1,4 @@
+import Rollbar from 'rollbar'
 import i18next from 'i18next'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
 import { Provider } from 'react-redux'
@@ -13,7 +14,7 @@ import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice
 const init = async () => {
   filter.loadDictionary('en')
   const rollbarConfig = {
-    accessToken: '7d0b140023c648b8a0b0066938ab40ee',
+    accessToken: import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN,
     environment: 'production',
   }
 
@@ -34,6 +35,8 @@ const init = async () => {
         escapeValue: false,
       },
     })
+  const rollbar = new Rollbar(rollbarConfig)
+  rollbar.error('Test error from frontend to verify Rollbar integration')
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
