@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import { removeAuth } from '../slices/authSlice.js'
-import LoginPage from './LoginPage.jsx'
 import Loader from '../components/Loader.jsx'
 
 const ChatPage = () => {
