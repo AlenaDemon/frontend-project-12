@@ -1,5 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/AlenaDemon/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AlenaDemon/frontend-project-12/actions)
+[![Maintainability](https://qlty.sh/gh/AlenaDemon/projects/frontend-project-12/maintainability.svg)](https://qlty.sh/gh/AlenaDemon/projects/frontend-project-12)
 
 # [Hexlet Chat](https://frontend-project-12-56co.onrender.com) - мессенджер
 
