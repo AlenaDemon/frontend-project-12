@@ -37,6 +37,7 @@ export default {
       networkError: 'Ошибка соединения',
       mustUnique: 'Такой пользователь уже существует',
       registrationError: 'Ошибка регистрации',
+      fetchError: 'Ошибка загрузки данных',
     },
     messages: {
       loading: 'Загрузка...',

@@ -25,6 +25,7 @@ const MessagesForm = () => {
     },
     onSubmit: async (values, { resetForm }) => {
       try {
+        if (!values.body.trim()) return
         const newMessage = {
           body: filter.clean(values.body),
           channelId: currentChannelId,
@@ -32,6 +33,7 @@ const MessagesForm = () => {
         }
         await sendMessage(newMessage).unwrap()
         resetForm()
+        inputRef.current.focus()
       }
       catch {
         toast.error(t('errors.networkError'))

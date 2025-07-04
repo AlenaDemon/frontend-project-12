@@ -98,7 +98,6 @@ const LoginPage = () => {
                         value={formik.values.username}
                         placeholder="username"
                         name="username"
-                        autoComplete="username"
                         onBlur={formik.handleBlur}
                         isInvalid={formik.touched.username && !!formik.errors.username}
                         required
@@ -116,7 +115,6 @@ const LoginPage = () => {
                         value={formik.values.password}
                         placeholder="password"
                         name="password"
-                        autoComplete="current-password"
                         onBlur={formik.handleBlur}
                         isInvalid={formik.touched.password && !!formik.errors.password}
                         required

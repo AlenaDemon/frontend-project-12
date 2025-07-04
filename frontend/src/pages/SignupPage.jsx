@@ -112,7 +112,6 @@ const SignupPage = () => {
                   <FormControl
                     placeholder="От 3 до 20 символов"
                     name="username"
-                    autoComplete="username"
                     required
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -135,7 +134,6 @@ const SignupPage = () => {
                     name="password"
                     aria-describedby="passwordHelpBlock"
                     required
-                    autoComplete="new-password"
                     type="password"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -156,7 +154,6 @@ const SignupPage = () => {
                     placeholder="Пароли должны совпадать"
                     name="confirmPassword"
                     required
-                    autoComplete="new-password"
                     type="password"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}

@@ -65,7 +65,7 @@ const Add = () => {
 
       <Modal.Body>
         <Form noValidate onSubmit={formik.handleSubmit}>
-          <Form.Group controlId="name">
+          <Form.Group controlId="name" className="mb-2">
             <Form.Control
               ref={inputRef}
               name="name"
